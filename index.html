@@ -8,96 +8,129 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet" />
 
   <style>
-    body {
-      margin: 0;
-      font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
-      background: #be1622;
-      color: #fff;
+    :root {
+      --sonora-red: #be1622;
+      --sonora-red-dark: #891019;
+      --bg: #1a0406;
+      --card-bg: rgba(255,255,255,0.06);
+      --card-border: rgba(255,255,255,0.16);
+      --pill-bg: rgba(255,255,255,0.1);
+      --text-main: #ffffff;
+      --text-muted: #d3d3d3;
     }
 
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      min-height: 100vh;
+      font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+      background: radial-gradient(circle at top, #e43743 0%, var(--sonora-red) 40%, #53050b 100%);
+      color: var(--text-main);
+      display: flex;
+      flex-direction: column;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
     .page {
-      max-width: 900px;
+      max-width: 960px;
       margin: 0 auto;
-      padding: 20px 16px 120px;
+      padding: 18px 16px 120px;
     }
 
     header {
       display: flex;
-      align-items: center;
       justify-content: space-between;
+      align-items: center;
+      margin-bottom: 18px;
       gap: 16px;
-      margin-bottom: 24px;
     }
 
     .brand {
       display: flex;
       flex-direction: column;
-      gap: 4px;
+      gap: 3px;
     }
 
     .brand-main {
-      font-size: 1.6rem;
+      font-size: 1.3rem;
       font-weight: 700;
-      letter-spacing: 0.06em;
+      letter-spacing: 0.08em;
       text-transform: uppercase;
     }
 
     .brand-sub {
-      font-size: 0.9rem;
+      font-size: 0.8rem;
       opacity: 0.85;
     }
 
     .btn-ghost {
       border-radius: 999px;
-      border: 1px solid rgba(255,255,255,0.8);
-      padding: 8px 16px;
-      font-size: 0.85rem;
+      border: 1px solid rgba(255,255,255,0.7);
+      padding: 7px 16px;
+      font-size: 0.8rem;
       text-transform: uppercase;
       letter-spacing: 0.08em;
       font-weight: 600;
-      background: transparent;
-      color: #fff;
-      text-decoration: none;
-      transition: 0.2s;
+      background: rgba(0,0,0,0.2);
+      cursor: pointer;
+      transition: all 0.2s ease;
     }
 
     .btn-ghost:hover {
-      background: rgba(255,255,255,0.16);
+      background: rgba(255,255,255,0.12);
     }
 
-    h1 {
-      margin: 0 0 10px;
-      font-size: 2rem;
+    .hero-title {
+      font-size: 2.1rem;
+      font-weight: 800;
+      line-height: 1.15;
+      margin-bottom: 10px;
     }
 
-    .hero-text {
+    .hero-title span {
+      color: #ffe082;
+    }
+
+    .hero-sub {
       font-size: 0.95rem;
       opacity: 0.9;
-      max-width: 520px;
-      margin-bottom: 24px;
+      max-width: 620px;
+      margin-bottom: 16px;
+    }
+
+    .sections {
+      display: flex;
+      flex-direction: column;
+      gap: 22px;
     }
 
     section {
-      background: #ffffff;
-      color: #222;
-      border-radius: 18px;
-      padding: 18px 18px 20px;
-      margin-bottom: 22px;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+      background: rgba(0,0,0,0.18);
+      border-radius: 22px;
+      border: 1px solid rgba(255,255,255,0.18);
+      padding: 14px 16px 16px;
+      backdrop-filter: blur(18px);
+    }
+
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 10px;
+      gap: 8px;
     }
 
     .section-title {
-      font-size: 1rem;
-      font-weight: 700;
+      font-size: 0.95rem;
       text-transform: uppercase;
       letter-spacing: 0.12em;
-      margin-bottom: 6px;
+      font-weight: 700;
     }
 
-    .section-sub {
-      font-size: 0.85rem;
-      color: #666;
-      margin-bottom: 14px;
+    .section-caption {
+      font-size: 0.8rem;
+      opacity: 0.8;
     }
 
     /* Programas en diferido */
@@ -108,108 +141,131 @@
       gap: 10px;
     }
 
-    .programa {
-      padding: 10px 12px;
-      border-radius: 12px;
-      background: #f4f4f4;
+    .programa-card {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      padding: 12px 12px;
+      background: rgba(255,255,255,0.05);
+      border-radius: 16px;
+      border: 1px solid var(--card-border);
     }
 
     .programa-nombre {
+      font-size: 0.95rem;
       font-weight: 700;
-      margin-bottom: 4px;
+      letter-spacing: 0.04em;
     }
 
     .programa-desc {
       font-size: 0.85rem;
-      color: #555;
-      margin-bottom: 6px;
+      opacity: 0.9;
     }
 
-    .programa-link {
-      font-size: 0.8rem;
-      display: inline-block;
+    .programa-plataformas {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 4px;
+    }
+
+    .pill-link {
+      font-size: 0.75rem;
       padding: 4px 10px;
       border-radius: 999px;
-      background: #be1622;
-      color: #fff;
-      text-decoration: none;
+      background: #ffffff;
+      color: var(--sonora-red-dark);
       font-weight: 600;
     }
 
-    .programa-link:hover {
-      background: #92101a;
-    }
+    .pill-link:hover { filter: brightness(1.05); }
 
     /* Directo */
 
-    .live-list {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
+    .live-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
     }
 
-    .live-dia {
-      background: #fafafa;
-      border-radius: 12px;
+    .live-day {
+      background: rgba(255,255,255,0.06);
+      border-radius: 16px;
       padding: 10px 12px;
+      border: 1px solid var(--card-border);
     }
 
-    .live-dia-nombre {
-      font-weight: 700;
-      text-transform: uppercase;
-      font-size: 0.9rem;
+    .live-day-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
       margin-bottom: 6px;
-      color: #be1622;
+    }
+
+    .live-day-name {
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      font-weight: 700;
     }
 
     .live-slot {
       font-size: 0.85rem;
-      color: #444;
+      opacity: 0.95;
     }
 
     .live-slot span {
       font-weight: 600;
+      color: #ffe082;
     }
 
-    /* Botón flotante (escuchar en directo) */
+    footer {
+      text-align: center;
+      font-size: 0.8rem;
+      opacity: 0.8;
+      margin-top: 16px;
+    }
 
     .floating-player-btn {
       position: fixed;
       right: 16px;
       bottom: 16px;
-      border-radius: 999px;
-      background: #ffffff;
-      color: #be1622;
-      padding: 10px 16px;
-      font-size: 0.85rem;
-      font-weight: 700;
-      text-decoration: none;
-      box-shadow: 0 10px 24px rgba(0,0,0,0.35);
       display: inline-flex;
       align-items: center;
       gap: 8px;
+      padding: 10px 16px;
+      border-radius: 999px;
+      background: #ffffff;
+      color: var(--sonora-red-dark);
+      font-size: 0.85rem;
+      font-weight: 700;
+      box-shadow: 0 10px 24px rgba(0,0,0,0.35);
+      z-index: 999;
+      text-decoration: none;
     }
 
     .floating-dot {
-      width: 8px;
-      height: 8px;
+      width: 9px;
+      height: 9px;
       border-radius: 999px;
       background: #ff5252;
       box-shadow: 0 0 0 4px rgba(255,82,82,0.5);
     }
 
-    footer {
-      font-size: 0.8rem;
-      opacity: 0.8;
-      margin-top: 8px;
-      text-align: center;
-      color: #ffe6e6;
-    }
-
-    @media (max-width: 600px) {
-      header {
-        flex-direction: column;
-        align-items: flex-start;
+    @media (min-width: 720px) {
+      .hero {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-end;
+        gap: 18px;
+        margin-bottom: 8px;
+      }
+      .hero-sub {
+        text-align: right;
+        margin-left: auto;
+      }
+      .live-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
       }
     }
   </style>
@@ -219,67 +275,76 @@
   <div class="page">
     <header>
       <div class="brand">
-        <div class="brand-main">Sonora UC3M</div>
-        <div class="brand-sub">Programación y escucha en diferido</div>
+        <div class="brand-main">SONORA UC3M</div>
+        <div class="brand-sub">Programación & podcasts oficiales</div>
       </div>
-      <a class="btn-ghost" href="https://www.instagram.com/sonorauc3m" target="_blank">@sonorauc3m</a>
+      <a class="btn-ghost" href="https://www.instagram.com/sonorauc3m" target="_blank">
+        @sonorauc3m
+      </a>
     </header>
 
-    <h1>Todo lo que suena en Sonora</h1>
-    <p class="hero-text">
-      Martes y jueves emitimos en directo. El resto del tiempo, puedes escuchar nuestros programas
-      en diferido cuando quieras.
-      Los datos se actualizan automáticamente desde una hoja de cálculo de Google.
-    </p>
-
-    <!-- Programas en diferido -->
-    <section>
-      <div class="section-title">Programas en diferido</div>
-      <div class="section-sub">Lista de programas (como en tu Linktree), actualizada desde Google Sheets.</div>
-      <div id="programas-list" class="programas-list">
-        <!-- Rellenado por JavaScript -->
+    <div class="hero">
+      <div>
+        <h1 class="hero-title">
+          Todo lo que suena en <span>Sonora</span>
+        </h1>
       </div>
-    </section>
+      <p class="hero-sub">
+        Martes y jueves en directo desde la UC3M. El resto del tiempo, tus programas en diferido para escuchar cuando quieras.
+      </p>
+    </div>
 
-    <!-- Directo martes y jueves -->
-    <section>
-      <div class="section-title">Directo · Martes y Jueves</div>
-      <div class="section-sub">Solo esos días emitimos desde el estudio. Horarios en hora peninsular (CET).</div>
-      <div id="live-list" class="live-list">
-        <!-- Rellenado por JavaScript -->
-      </div>
-    </section>
+    <div class="sections">
 
-    <footer>
-      La radio de la Universidad Carlos III de Madrid · Sonora UC3M
-    </footer>
+      <!-- Programas en diferido -->
+      <section>
+        <div class="section-header">
+          <div class="section-title">Programas en diferido</div>
+          <div class="section-caption">Desde Spotify, iVoox, YouTube…</div>
+        </div>
+        <div id="programas-list" class="programas-list">
+          <!-- JS rellena aquí -->
+        </div>
+      </section>
+
+      <!-- Directo martes / jueves -->
+      <section>
+        <div class="section-header">
+          <div class="section-title">Directo · Martes y Jueves</div>
+          <div class="section-caption">Horario CET · Emisión desde el estudio UC3M</div>
+        </div>
+        <div id="live-grid" class="live-grid">
+          <!-- JS rellena aquí -->
+        </div>
+      </section>
+
+      <footer>
+        La radio de la Universidad Carlos III de Madrid · Sonora UC3M
+      </footer>
+    </div>
   </div>
 
-  <!-- Botón flotante hacia el player público -->
   <a class="floating-player-btn" href="https://radio.radiobot.org/public/sonora" target="_blank">
     <span class="floating-dot"></span>
     <span>Escuchar en directo</span>
   </a>
 
   <script>
-    // ⬇️ PON AQUÍ EL ID DE TU HOJA DE GOOGLE (EL LARGO DE LETRAS Y NÚMEROS)
-    const SHEET_ID = "SHEET_ID_AQUI"; 
+    // ⬇️ CAMBIA ESTO por el ID REAL de tu hoja
+    const SHEET_ID = "1g9f3Ue9GtdaTbpxp3DCXncrNPhjnHPk0m9QTXdfSAxM";
 
-    const ODF_SHEET_NAME = "OnDemand"; // pestaña 1
-    const LIVE_SHEET_NAME = "Directo";  // pestaña 2
+    const ODF_SHEET_NAME  = "OnDemand";
+    const LIVE_SHEET_NAME = "Directo";
 
-    // Construye URL tipo gviz para leer cada pestaña en JSON
     function gvizUrl(sheetName) {
-      return `https://docs.google.com/spreadsheets/d/${1g9f3Ue9GtdaTbpxp3DCXncrNPhjnHPk0m9QTXdfSAxM/edit?gid=885914669#gid=885914669}/gviz/tq?tqx=out:json&sheet=${encodeURIComponent(sheetName)}`;
+      return `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=${encodeURIComponent(sheetName)}`;
     }
 
     async function fetchSheet(sheetName) {
       const res = await fetch(gvizUrl(sheetName));
       const text = await res.text();
-      // Recortar el wrapper "google.visualization.Query.setResponse(...);"
-      const json = JSON.parse(text.substr(47).slice(0, -2));
-      const rows = json.table.rows;
-      // Convertimos filas en arrays [col0, col1, ...] de strings
+      const json = JSON.parse(text.substr(47).slice(0, -2)); // recorta wrapper gviz
+      const rows = json.table.rows || [];
       return rows.map(r => (r.c || []).map(c => (c && c.v) ? String(c.v) : ""));
     }
 
@@ -289,13 +354,12 @@
           fetchSheet(ODF_SHEET_NAME),
           fetchSheet(LIVE_SHEET_NAME)
         ]);
-
         renderOnDemand(onDemandRows);
         renderLive(liveRows);
       } catch (err) {
         console.error("Error cargando datos:", err);
         document.getElementById("programas-list").innerHTML =
-          "<div style='font-size:0.85rem;color:#666;'>No se ha podido cargar la programación ahora mismo.</div>";
+          "<div style='font-size:0.85rem;opacity:0.8;'>No se ha podido cargar la programación ahora mismo.</div>";
       }
     }
 
@@ -308,41 +372,48 @@
         return;
       }
 
-      // Primera fila = cabecera, la ignoramos
+      // Fila 0 = encabezados
       rows.slice(1).forEach(cols => {
-        const [nombre, descripcion, enlace] = cols;
-
+        const [nombre, descripcion, spotify, ivoox, youtube] = cols;
         if (!nombre) return;
 
-        const div = document.createElement("div");
-        div.className = "programa";
+        const card = document.createElement("article");
+        card.className = "programa-card";
 
-        const title = document.createElement("div");
-        title.className = "programa-nombre";
-        title.textContent = nombre;
+        const name = document.createElement("div");
+        name.className = "programa-nombre";
+        name.textContent = nombre;
 
         const desc = document.createElement("div");
         desc.className = "programa-desc";
         desc.textContent = descripcion || "";
 
-        div.appendChild(title);
-        if (descripcion) div.appendChild(desc);
+        const plats = document.createElement("div");
+        plats.className = "programa-plataformas";
 
-        if (enlace) {
-          const a = document.createElement("a");
-          a.className = "programa-link";
-          a.href = enlace;
-          a.target = "_blank";
-          a.textContent = "Escuchar / más info";
-          div.appendChild(a);
-        }
+        if (spotify) plats.appendChild(createPlatButton("Spotify", spotify));
+        if (ivoox)   plats.appendChild(createPlatButton("iVoox", ivoox));
+        if (youtube) plats.appendChild(createPlatButton("YouTube", youtube));
 
-        cont.appendChild(div);
+        card.appendChild(name);
+        if (descripcion) card.appendChild(desc);
+        if (plats.children.length) card.appendChild(plats);
+
+        cont.appendChild(card);
       });
     }
 
+    function createPlatButton(label, url) {
+      const a = document.createElement("a");
+      a.className = "pill-link";
+      a.href = url;
+      a.target = "_blank";
+      a.textContent = label;
+      return a;
+    }
+
     function renderLive(rows) {
-      const cont = document.getElementById("live-list");
+      const cont = document.getElementById("live-grid");
       cont.innerHTML = "";
 
       if (!rows.length) {
@@ -350,13 +421,12 @@
         return;
       }
 
-      // Agrupar por día (Martes / Jueves)
       const byDay = {};
       rows.slice(1).forEach(cols => {
         const [dia, hora, programa] = cols;
         if (!dia || !hora || !programa) return;
 
-        const key = dia.trim().toLowerCase(); // "martes", "jueves"
+        const key = dia.trim().toLowerCase(); // martes / jueves
         if (!byDay[key]) byDay[key] = [];
         byDay[key].push({ hora, programa });
       });
@@ -365,22 +435,27 @@
         const slots = byDay[key];
         if (!slots || !slots.length) return;
 
-        const diaDiv = document.createElement("div");
-        diaDiv.className = "live-dia";
+        const day = document.createElement("div");
+        day.className = "live-day";
 
-        const nombre = document.createElement("div");
-        nombre.className = "live-dia-nombre";
-        nombre.textContent = key.toUpperCase();
-        diaDiv.appendChild(nombre);
+        const header = document.createElement("div");
+        header.className = "live-day-header";
+
+        const name = document.createElement("div");
+        name.className = "live-day-name";
+        name.textContent = key.toUpperCase();
+
+        header.appendChild(name);
+        day.appendChild(header);
 
         slots.forEach(s => {
           const p = document.createElement("div");
           p.className = "live-slot";
           p.innerHTML = `<span>${s.hora}</span> · ${s.programa}`;
-          diaDiv.appendChild(p);
+          day.appendChild(p);
         });
 
-        cont.appendChild(diaDiv);
+        cont.appendChild(day);
       });
     }
 
