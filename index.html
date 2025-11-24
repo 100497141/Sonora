@@ -2,523 +2,149 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Programación · Sonora UC3M</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sonora UC3M — Programación</title>
 
-  <!-- Fuente Google (puedes cambiarla si quieres) -->
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <!-- Fuentes -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500;700&display=swap" rel="stylesheet">
 
   <style>
-    :root {
-      --sonora-red: #be1622;
-      --sonora-red-dark: #9d101b;
-      --card-bg: #ffffff;
-      --text-main: #1d1d1f;
-      --text-muted: #6b6b6b;
-      --pill-bg: #f3f3f3;
-      --accent: #ffb74d;
-      --border-soft: rgba(255,255,255,0.12);
-    }
-
-    * {
-      box-sizing: border-box;
+    body {
       margin: 0;
+      font-family: 'Inter', sans-serif;
+      background: #a62828;
+      color: #fff;
+      text-align: center;
       padding: 0;
     }
 
-    body {
-      font-family: 'Montserrat', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
-      background: radial-gradient(circle at top, #d32532 0%, var(--sonora-red) 40%, #7c0e16 100%);
-      color: #ffffff;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
+    .container {
+      max-width: 600px;
+      margin: auto;
+      padding: 20px;
     }
 
-    a {
-      color: inherit;
-      text-decoration: none;
-    }
-
-    /* ===== LAYOUT GENERAL ===== */
-    .page {
-      max-width: 1040px;
-      margin: 0 auto;
-      padding: 16px 16px 120px; /* espacio abajo para botón flotante */
-    }
-
-    header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 16px;
-      padding: 8px 0 16px;
-    }
-
-    .brand {
-      display: flex;
-      flex-direction: column;
-      gap: 2px;
-    }
-
-    .brand-main {
-      font-size: 1.3rem;
+    h1 {
+      font-size: 2.2rem;
+      margin-top: 20px;
       font-weight: 700;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
     }
 
-    .brand-sub {
-      font-size: 0.8rem;
-      font-weight: 500;
+    .subtitle {
+      font-size: 1.1rem;
       opacity: 0.8;
+      margin-bottom: 40px;
     }
 
-    .chip-live {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 4px 10px;
-      border-radius: 999px;
-      background: rgba(0,0,0,0.16);
-      font-size: 0.75rem;
-      font-weight: 500;
+    .card {
+      background: #fff;
+      color: #333;
+      border-radius: 20px;
+      padding: 25px;
+      margin-bottom: 30px;
+      text-align: left;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.2);
     }
 
-    .chip-live-dot {
-      width: 8px;
-      height: 8px;
-      border-radius: 999px;
-      background: #ff5252;
-      box-shadow: 0 0 0 6px rgba(255,82,82,0.35);
-    }
-
-    /* Botón link al player arriba (opcional) */
-    .header-actions {
-      display: flex;
-      gap: 10px;
-      align-items: center;
-    }
-
-    .btn-ghost {
-      border-radius: 999px;
-      border: 1px solid rgba(255,255,255,0.6);
-      padding: 7px 14px;
-      font-size: 0.8rem;
-      font-weight: 600;
-      background: transparent;
-      color: #ffffff;
-      cursor: pointer;
-      transition: all 0.2s ease;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-    }
-
-    .btn-ghost:hover {
-      background: rgba(255,255,255,0.12);
-    }
-
-    /* ===== HERO ===== */
-    .hero {
-      padding: 8px 0 24px;
-    }
-
-    .hero-title {
-      font-size: 2rem;
-      line-height: 1.15;
-      max-width: 480px;
+    .day-title {
+      font-size: 1.2rem;
       font-weight: 700;
+      margin-bottom: 15px;
     }
 
-    .hero-title span {
-      color: #ffe082;
+    .show {
+      margin-bottom: 15px;
     }
 
-    .hero-subtitle {
-      margin-top: 10px;
-      max-width: 480px;
-      font-size: 0.95rem;
-      opacity: 0.9;
+    .hour {
+      font-weight: 700;
+      color: #a62828;
     }
 
-    .hero-tags {
-      margin-top: 16px;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-    }
-
-    .hero-tag {
-      font-size: 0.75rem;
-      border-radius: 999px;
-      padding: 4px 10px;
-      background: rgba(0,0,0,0.18);
-      border: 1px solid rgba(255,255,255,0.14);
-    }
-
-    /* ===== SECCIONES ===== */
-    section {
-      margin-top: 24px;
-    }
-
-    .section-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: baseline;
-      margin-bottom: 12px;
-      gap: 8px;
-    }
-
-    .section-title {
+    .btn {
+      display: inline-block;
+      background: #fff;
+      color: #a62828;
+      padding: 14px 22px;
+      border-radius: 30px;
+      font-weight: 700;
+      text-decoration: none;
       font-size: 1rem;
-      text-transform: uppercase;
-      letter-spacing: 0.12em;
-      font-weight: 600;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.25);
+      transition: 0.25s;
+      margin-top: 10px;
     }
 
-    .section-caption {
-      font-size: 0.8rem;
-      opacity: 0.8;
+    .btn:hover {
+      background: #ffeaea;
+      transform: translateY(-3px);
     }
 
-    /* ===== TARJETAS DE PROGRAMA (HOY) ===== */
-    .shows-list {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
+    footer {
+      margin-top: 40px;
+      margin-bottom: 40px;
+      font-size: 0.9rem;
+      opacity: 0.7;
     }
 
-    .show-card {
-      display: flex;
-      gap: 12px;
-      padding: 12px 14px;
-      background: rgba(255,255,255,0.06);
-      border-radius: 18px;
-      border: 1px solid rgba(255,255,255,0.15);
-      backdrop-filter: blur(10px);
-    }
-
-    .show-time {
-      min-width: 82px;
-      font-size: 0.8rem;
-      font-weight: 600;
-      color: #ffe082;
-      padding-top: 4px;
-    }
-
-    .show-main {
-      flex: 1;
-    }
-
-    .show-title {
-      font-size: 0.98rem;
-      font-weight: 600;
-      margin-bottom: 2px;
-    }
-
-    .show-host {
-      font-size: 0.8rem;
-      opacity: 0.9;
-      margin-bottom: 6px;
-    }
-
-    .show-meta {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
-      align-items: center;
-    }
-
-    .pill {
-      font-size: 0.7rem;
-      border-radius: 999px;
-      padding: 3px 8px;
-      background: rgba(255,255,255,0.1);
-      border: 1px solid rgba(255,255,255,0.16);
-    }
-
-    .pill-link {
-      font-size: 0.7rem;
-      border-radius: 999px;
-      padding: 3px 10px;
-      background: #ffffff;
-      color: var(--sonora-red-dark);
-      font-weight: 600;
-    }
-
-    /* ===== PROGRAMACIÓN SEMANAL ===== */
-    .week-grid {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 12px;
-    }
-
-    .day-column {
-      background: rgba(0,0,0,0.12);
-      border-radius: 16px;
-      padding: 10px 12px;
-      border: 1px solid rgba(255,255,255,0.12);
-    }
-
-    .day-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 6px;
-    }
-
-    .day-name {
-      font-size: 0.85rem;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-    }
-
-    .day-tag {
-      font-size: 0.7rem;
-      opacity: 0.8;
-    }
-
-    .day-show {
-      font-size: 0.8rem;
-      opacity: 0.95;
-      margin-top: 4px;
-    }
-
-    .day-show span {
-      font-weight: 600;
-    }
-
-    /* ===== BOTÓN FLOTANTE "ESCUCHAR EN DIRECTO" ===== */
-    .floating-player-btn {
-      position: fixed;
-      right: 16px;
-      bottom: 16px;
-      border-radius: 999px;
-      background: #ffffff;
-      color: var(--sonora-red-dark);
-      padding: 10px 16px;
-      font-size: 0.85rem;
-      font-weight: 700;
-      box-shadow: 0 10px 24px rgba(0,0,0,0.35);
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      text-decoration: none;
-      z-index: 999;
-    }
-
-    .floating-player-dot {
-      width: 8px;
-      height: 8px;
-      border-radius: 999px;
-      background: #ff5252;
-      box-shadow: 0 0 0 4px rgba(255,82,82,0.45);
-    }
-
-    .floating-player-btn span {
-      white-space: nowrap;
-    }
-
-    /* ===== RESPONSIVE ===== */
-    @media (min-width: 720px) {
-      .hero {
-        display: flex;
-        align-items: flex-end;
-        justify-content: space-between;
-        gap: 24px;
-      }
-
-      .hero-right {
-        text-align: right;
-        font-size: 0.8rem;
-        opacity: 0.9;
-      }
-
-      .week-grid {
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-      }
-    }
-
-    @media (min-width: 1024px) {
-      .hero-title {
-        font-size: 2.4rem;
-      }
+    img.logo {
+      width: 150px;
+      margin: 20px auto;
     }
   </style>
 </head>
 
 <body>
-  <div class="page">
 
-    <!-- HEADER -->
-    <header>
-      <div class="brand">
-        <div class="brand-main">Sonora UC3M</div>
-        <div class="brand-sub">La radio de la Universidad Carlos III de Madrid</div>
-      </div>
-      <div class="header-actions">
-        <div class="chip-live">
-          <span class="chip-live-dot"></span>
-          EN DIRECTO
-        </div>
-      </div>
-    </header>
+  <div class="container">
 
-    <!-- HERO -->
-    <section class="hero">
-      <div>
-        <h1 class="hero-title">
-          Programación & <span>escucha en diferido</span>
-        </h1>
-        <p class="hero-subtitle">
-          Descubre qué está sonando ahora en Sonora UC3M, qué viene después
-          y recupera tus programas favoritos cuando quieras.
-        </p>
-        <div class="hero-tags">
-          <div class="hero-tag">Música independiente</div>
-          <div class="hero-tag">Programas de autor</div>
-          <div class="hero-tag">Contenido universitario</div>
-        </div>
-      </div>
-      <div class="hero-right">
-        Actualizado manualmente · Horario CET<br />
-        Sigue las redes: <strong>@sonorauc3m</strong>
-      </div>
-    </section>
+    <img src="https://radio.radiobot.org/api/station/60/art/d2acdefc9ebd5b0c6d52bf5b-1762383118.jpg" class="logo" />
 
-    <!-- HOY -->
-    <section id="hoy">
-      <div class="section-header">
-        <h2 class="section-title">Hoy en Sonora</h2>
-        <p class="section-caption">Ejemplo de parrilla, edítala a tu gusto 📝</p>
+    <h1>Programación Sonora UC3M</h1>
+    <div class="subtitle">Toda la programación semanal de tu radio universitaria</div>
+
+    <!-- EJEMPLO DE TARJETA (replicable) -->
+    <div class="card">
+      <div class="day-title">Lunes</div>
+
+      <div class="show">
+        <div class="hour">10:00 – 12:00</div>
+        <div>🎙️ Morning Sonora</div>
       </div>
 
-      <div class="shows-list">
-        <article class="show-card">
-          <div class="show-time">10:00 · 11:00</div>
-          <div class="show-main">
-            <h3 class="show-title">BAJOTIERRA</h3>
-            <p class="show-host">Con Dani Dicostas, Lulibono y Vicente Calderón</p>
-            <div class="show-meta">
-              <span class="pill">Música urbana · Entrevistas</span>
-              <a class="pill-link" href="#" target="_blank">Último episodio</a>
-            </div>
-          </div>
-        </article>
-
-        <article class="show-card">
-          <div class="show-time">11:00 · 12:00</div>
-          <div class="show-main">
-            <h3 class="show-title">FULL OPTION</h3>
-            <p class="show-host">Selección musical y cultura pop</p>
-            <div class="show-meta">
-              <span class="pill">Magazine musical</span>
-              <a class="pill-link" href="#" target="_blank">Escuchar en diferido</a>
-            </div>
-          </div>
-        </article>
-
-        <article class="show-card">
-          <div class="show-time">12:00 · 13:00</div>
-          <div class="show-main">
-            <h3 class="show-title">JAMSESSION</h3>
-            <p class="show-host">Directos, improvisación y descubrimientos</p>
-            <div class="show-meta">
-              <span class="pill">Live sessions</span>
-              <a class="pill-link" href="#" target="_blank">Ver playlist</a>
-            </div>
-          </div>
-        </article>
-
-        <article class="show-card">
-          <div class="show-time">Tarde</div>
-          <div class="show-main">
-            <h3 class="show-title">ROTACIÓN SONORA</h3>
-            <p class="show-host">Selección musical de la casa</p>
-            <div class="show-meta">
-              <span class="pill">24/7</span>
-            </div>
-          </div>
-        </article>
+      <div class="show">
+        <div class="hour">17:00 – 18:00</div>
+        <div>⚽ Fútbol UC3M Podcast</div>
       </div>
-    </section>
+    </div>
 
-    <!-- PROGRAMACIÓN SEMANAL -->
-    <section id="semana">
-      <div class="section-header">
-        <h2 class="section-title">Programación semanal</h2>
-        <p class="section-caption">Organiza la parrilla por días</p>
+    <div class="card">
+      <div class="day-title">Martes</div>
+
+      <div class="show">
+        <div class="hour">12:00 – 13:00</div>
+        <div>🎧 Indie en Directo</div>
       </div>
 
-      <div class="week-grid">
-        <div class="day-column">
-          <div class="day-header">
-            <div class="day-name">Lunes</div>
-            <div class="day-tag">Inicio de semana</div>
-          </div>
-          <p class="day-show"><span>10:00</span> · BAJOTIERRA</p>
-          <p class="day-show"><span>11:00</span> · FULL OPTION</p>
-          <p class="day-show"><span>12:00</span> · JAMSESSION</p>
-        </div>
-
-        <div class="day-column">
-          <div class="day-header">
-            <div class="day-name">Martes</div>
-            <div class="day-tag">Contenido original</div>
-          </div>
-          <p class="day-show"><span>10:00</span> · Programa A</p>
-          <p class="day-show"><span>11:00</span> · Programa B</p>
-          <p class="day-show"><span>12:00</span> · Programa C</p>
-        </div>
-
-        <div class="day-column">
-          <div class="day-header">
-            <div class="day-name">Miércoles</div>
-            <div class="day-tag">Especiales</div>
-          </div>
-          <p class="day-show"><span>10:00</span> · Especial cine</p>
-          <p class="day-show"><span>11:00</span> · Taller de radio</p>
-          <p class="day-show"><span>12:00</span> · Indie en español</p>
-        </div>
-
-        <div class="day-column">
-          <div class="day-header">
-            <div class="day-name">Jueves</div>
-            <div class="day-tag">Nuevos lanzamientos</div>
-          </div>
-          <p class="day-show"><span>10:00</span> · Programa X</p>
-          <p class="day-show"><span>11:00</span> · Programa Y</p>
-          <p class="day-show"><span>12:00</span> · Programa Z</p>
-        </div>
-
-        <div class="day-column">
-          <div class="day-header">
-            <div class="day-name">Viernes</div>
-            <div class="day-tag">Fin de semana</div>
-          </div>
-          <p class="day-show"><span>10:00</span> · Sesión electrónica</p>
-          <p class="day-show"><span>11:00</span> · Clásicos Sonora</p>
-          <p class="day-show"><span>12:00</span> · Invitados sorpresa</p>
-        </div>
-
-        <div class="day-column">
-          <div class="day-header">
-            <div class="day-name">Fin de semana</div>
-            <div class="day-tag">Maratones & reposiciones</div>
-          </div>
-          <p class="day-show"><span>Todo el día</span> · Reposiciones y sesiones especiales</p>
-        </div>
+      <div class="show">
+        <div class="hour">18:00 – 19:00</div>
+        <div>🎤 Charlas de Campus</div>
       </div>
-    </section>
+    </div>
+
+    <!-- BOTÓN A LA RADIO EN DIRECTO -->
+    <a class="btn" href="https://radio.radiobot.org/public/sonora" target="_blank">
+      Escuchar ahora en directo
+    </a>
+
+    <!-- INSTAGRAM -->
+    <a class="btn" href="https://www.instagram.com/sonorauc3m" target="_blank" style="margin-top:20px;">
+      Síguenos en Instagram
+    </a>
 
   </div>
 
-  <!-- BOTÓN FLOTANTE ESCUCHAR EN DIRECTO -->
-  <a class="floating-player-btn" href="https://radio.radiobot.org/public/sonora" target="_blank">
-    <span class="floating-player-dot"></span>
-    <span>Escuchar en directo</span>
-  </a>
+  <footer>La radio oficial de la Universidad Carlos III de Madrid</footer>
 
 </body>
 </html>
