@@ -5,19 +5,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Sonora UC3M · Programación y podcasts</title>
 
-  <!-- Intentará usar Helvetica Now Display si está instalada en el sistema -->
   <style>
     :root {
       --sonora-red: #be1622;
       --sonora-red-dark: #8c1019;
-      --sonora-red-darker: #45060a;
-      --bg-deep: #050307;
-      --card-bg: rgba(0,0,0,0.4);
-      --card-border: rgba(255,255,255,0.14);
-      --pill-bg: rgba(255,255,255,0.06);
+      --sonora-red-darker: #550910;
+      --card-bg: rgba(0,0,0,0.32);
+      --card-border: rgba(255,255,255,0.16);
       --text-main: #ffffff;
-      --text-muted: #d4d4d4;
-      --text-soft: #a3a3a3;
+      --text-muted: #e0e0e0;
+      --text-soft: #b9b9b9;
     }
 
     * {
@@ -31,8 +28,7 @@
       font-family: "Helvetica Now Display", "Helvetica Neue", Helvetica,
         system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
       background:
-        radial-gradient(circle at top left, rgba(190,22,34,0.85) 0%, transparent 45%),
-        radial-gradient(circle at bottom right, #300309 0%, #050307 55%, #000000 100%);
+        radial-gradient(circle at top, #f04753 0%, var(--sonora-red) 35%, var(--sonora-red-darker) 100%);
       color: var(--text-main);
       display: flex;
       flex-direction: column;
@@ -44,19 +40,17 @@
     }
 
     .page {
-      max-width: 1200px;
+      max-width: 960px;
       margin: 0 auto;
-      padding: 20px 20px 120px;
+      padding: 16px 14px 96px;
     }
-
-    /* === HEADER / NAVBAR === */
 
     header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 22px;
-      gap: 16px;
+      margin-bottom: 16px;
+      gap: 12px;
     }
 
     .brand {
@@ -66,98 +60,126 @@
     }
 
     .brand-main {
-      font-size: 1.5rem;
-      font-weight: 800;
-      letter-spacing: 0.14em;
+      font-size: 1.3rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
       text-transform: uppercase;
     }
 
     .brand-sub {
       font-size: 0.78rem;
-      opacity: 0.82;
+      opacity: 0.8;
     }
 
     .btn-ghost {
       border-radius: 999px;
-      border: 1px solid rgba(255,255,255,0.8);
-      padding: 7px 18px;
+      border: 1px solid rgba(255,255,255,0.7);
+      padding: 6px 14px;
       font-size: 0.78rem;
       text-transform: uppercase;
-      letter-spacing: 0.12em;
+      letter-spacing: 0.08em;
       font-weight: 600;
-      background: rgba(0,0,0,0.35);
+      background: rgba(0,0,0,0.25);
       cursor: pointer;
       transition: all 0.2s ease;
       display: inline-flex;
       align-items: center;
-      gap: 8px;
+      gap: 6px;
+      white-space: nowrap;
     }
 
     .btn-ghost:hover {
-      background: rgba(0,0,0,0.65);
-      transform: translateY(-1px);
+      background: rgba(0,0,0,0.45);
     }
 
     .btn-ghost-dot {
-      width: 7px;
-      height: 7px;
+      width: 6px;
+      height: 6px;
       border-radius: 999px;
-      background: #00ff7b;
-      box-shadow: 0 0 0 4px rgba(0,255,123,0.28);
+      background: #fff;
     }
-
-    /* === HERO / FEEL OTT === */
 
     .hero {
-      display: grid;
-      grid-template-columns: minmax(0, 3fr) minmax(0, 2.2fr);
-      gap: 24px;
-      align-items: center;
-      margin-bottom: 18px;
-    }
-
-    .hero-left {
       display: flex;
       flex-direction: column;
-      gap: 10px;
+      gap: 8px;
+      margin-bottom: 12px;
     }
 
     .hero-title {
-      font-size: 2.5rem;
+      font-size: 2rem;
       font-weight: 800;
-      line-height: 1.08;
+      line-height: 1.1;
+      margin-bottom: 4px;
     }
 
     .hero-title span {
       color: #ffffff;
-      text-shadow: 0 0 26px rgba(0,0,0,0.55);
+      text-shadow: 0 0 12px rgba(0,0,0,0.45);
     }
 
     .hero-sub {
-      font-size: 0.96rem;
+      font-size: 0.94rem;
       opacity: 0.9;
-      max-width: 520px;
+      max-width: 620px;
     }
 
-    .hero-tag {
-      font-size: 0.78rem;
+    .sections {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    section {
+      background: rgba(0,0,0,0.22);
+      border-radius: 20px;
+      border: 1px solid rgba(255,255,255,0.15);
+      padding: 14px 14px 16px;
+      backdrop-filter: blur(20px);
+    }
+
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 10px;
+      gap: 8px;
+    }
+
+    .section-title {
+      font-size: 0.88rem;
       text-transform: uppercase;
       letter-spacing: 0.18em;
-      opacity: 0.85;
+      font-weight: 700;
     }
 
-    .hero-badge-row {
-      display: inline-flex;
+    .section-caption {
+      font-size: 0.78rem;
+      opacity: 0.8;
+      text-align: right;
+    }
+
+    /* ===== DIRECTO ===== */
+
+    .live-main {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .live-badge-row {
+      display: flex;
       flex-wrap: wrap;
       gap: 8px;
-      margin-top: 4px;
+      align-items: center;
+      margin-bottom: 4px;
     }
 
     .pill {
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      padding: 4px 11px;
+      padding: 4px 10px;
       font-size: 0.7rem;
       border-radius: 999px;
       text-transform: uppercase;
@@ -172,143 +194,73 @@
       border-color: transparent;
     }
 
-    .hero-right {
-      position: relative;
-      border-radius: 24px;
-      overflow: hidden;
-      min-height: 170px;
-      background:
-        radial-gradient(circle at top left, rgba(255,255,255,0.18) 0%, transparent 55%),
-        linear-gradient(135deg, rgba(0,0,0,0.8), rgba(0,0,0,0.4));
-      border: 1px solid rgba(255,255,255,0.2);
-      padding: 14px 16px 14px;
-      box-shadow: 0 24px 60px rgba(0,0,0,0.8);
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
+    .live-highlight {
+      background: linear-gradient(
+        135deg,
+        rgba(0,0,0,0.55),
+        rgba(0,0,0,0.25)
+      );
+      border-radius: 18px;
+      padding: 12px 14px 13px;
+      border: 1px solid rgba(255,255,255,0.25);
+      display: grid;
+      grid-template-columns: minmax(0, 2fr) minmax(0, 1.4fr);
       gap: 10px;
     }
 
-    .hero-live-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .hero-live-label {
+    .live-now-label {
       font-size: 0.7rem;
       text-transform: uppercase;
-      letter-spacing: 0.2em;
+      letter-spacing: 0.18em;
       opacity: 0.9;
-    }
-
-    .hero-live-tag {
-      font-size: 0.72rem;
-      padding: 3px 10px;
-      border-radius: 999px;
-      background: rgba(255,255,255,0.1);
-      border: 1px solid rgba(255,255,255,0.35);
-    }
-
-    .hero-live-main {
-      margin-top: 4px;
-    }
-
-    .hero-live-title {
-      font-size: 1.05rem;
-      font-weight: 700;
-      margin-bottom: 4px;
-    }
-
-    .hero-live-time {
-      font-size: 0.82rem;
-      color: var(--text-soft);
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-
-    .hero-live-time-dot {
-      width: 7px;
-      height: 7px;
-      border-radius: 999px;
-      background: #00ff7b;
-      box-shadow: 0 0 0 4px rgba(0,255,123,0.26);
-    }
-
-    .hero-live-empty {
-      font-size: 0.86rem;
-      color: var(--text-soft);
-    }
-
-    .hero-live-next-label {
-      font-size: 0.72rem;
-      text-transform: uppercase;
-      letter-spacing: 0.16em;
-      opacity: 0.9;
-      margin-top: 6px;
       margin-bottom: 2px;
     }
 
-    .hero-live-next {
-      font-size: 0.84rem;
-      color: var(--text-muted);
-    }
-
-    .hero-cta-row {
-      margin-top: 10px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 12px;
-    }
-
-    .hero-cta {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 8px 16px;
-      border-radius: 999px;
-      background: #ffffff;
-      color: var(--sonora-red-dark);
-      font-size: 0.82rem;
+    .live-now-title {
+      font-size: 1.02rem;
       font-weight: 700;
+      margin-bottom: 2px;
+    }
+
+    .live-now-time {
+      font-size: 0.8rem;
+      color: var(--text-soft);
+    }
+
+    .live-now-empty {
+      font-size: 0.85rem;
+      color: var(--text-soft);
+    }
+
+    .live-next-label {
+      font-size: 0.7rem;
       text-transform: uppercase;
-      letter-spacing: 0.14em;
-      box-shadow: 0 10px 26px rgba(0,0,0,0.6);
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      letter-spacing: 0.16em;
+      opacity: 0.9;
+      margin-bottom: 3px;
     }
 
-    .hero-cta-dot {
-      width: 8px;
-      height: 8px;
-      border-radius: 999px;
-      background: var(--sonora-red);
+    .live-next-title {
+      font-size: 0.88rem;
+      font-weight: 600;
+      margin-bottom: 2px;
     }
 
-    .hero-cta:hover {
-      transform: translateY(-1px);
-      box-shadow: 0 16px 34px rgba(0,0,0,0.8);
+    .live-next-time {
+      font-size: 0.8rem;
+      color: var(--text-soft);
     }
 
-    .hero-progress-wrap {
-      flex: 1;
-      display: flex;
-      align-items: center;
-      justify-content: flex-end;
-    }
-
-    .hero-progress-bar-bg {
+    .live-progress {
+      margin-top: 8px;
       width: 100%;
-      max-width: 160px;
       height: 3px;
       border-radius: 999px;
       background: rgba(255,255,255,0.16);
       overflow: hidden;
     }
 
-    .hero-progress-bar {
+    .live-progress-bar {
       height: 100%;
       width: 0%;
       background: #ffffff;
@@ -316,54 +268,14 @@
       transition: width 0.4s ease;
     }
 
-    /* === SECTIONS (OTT LOOK) === */
-
-    .sections {
-      display: flex;
-      flex-direction: column;
-      gap: 24px;
-      margin-top: 10px;
-    }
-
-    section {
-      background: linear-gradient(135deg, rgba(0,0,0,0.74), rgba(0,0,0,0.52));
-      border-radius: 22px;
-      border: 1px solid rgba(255,255,255,0.12);
-      padding: 14px 18px 18px;
-      backdrop-filter: blur(24px);
-    }
-
-    .section-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: baseline;
-      margin-bottom: 10px;
-      gap: 8px;
-    }
-
-    .section-title {
-      font-size: 0.88rem;
-      text-transform: uppercase;
-      letter-spacing: 0.2em;
-      font-weight: 700;
-    }
-
-    .section-caption {
-      font-size: 0.78rem;
-      opacity: 0.8;
-    }
-
-    /* === LISTADO DE DIRECTO (MARTES / JUEVES) === */
-
     .live-grid {
       display: grid;
       grid-template-columns: 1fr;
       gap: 10px;
-      margin-top: 10px;
     }
 
     .live-day {
-      background: rgba(0,0,0,0.58);
+      background: rgba(0,0,0,0.38);
       border-radius: 16px;
       padding: 10px 12px;
       border: 1px solid var(--card-border);
@@ -374,6 +286,7 @@
       justify-content: space-between;
       align-items: center;
       margin-bottom: 6px;
+      gap: 8px;
     }
 
     .live-day-name {
@@ -399,61 +312,39 @@
     .live-slot-time {
       font-weight: 600;
       color: #ffffff;
-      min-width: 95px;
+      min-width: 90px;
     }
 
     .live-slot-name {
       color: var(--text-muted);
     }
 
-    /* === PROGRAMAS EN DIFERIDO (ROW OTT) === */
+    /* ===== PROGRAMAS EN DIFERIDO ===== */
 
     .programas-list {
       display: flex;
-      flex-direction: row;
-      gap: 12px;
-      overflow-x: auto;
-      padding-bottom: 4px;
-      scrollbar-width: thin;
-      scrollbar-color: rgba(255,255,255,0.4) transparent;
-    }
-
-    .programas-list::-webkit-scrollbar {
-      height: 6px;
-    }
-
-    .programas-list::-webkit-scrollbar-track {
-      background: transparent;
-    }
-
-    .programas-list::-webkit-scrollbar-thumb {
-      background: rgba(255,255,255,0.4);
-      border-radius: 999px;
+      flex-direction: column;
+      gap: 10px;
     }
 
     .programa-card {
-      flex: 0 0 250px;
       display: flex;
       flex-direction: column;
-      justify-content: space-between;
-      gap: 8px;
+      gap: 6px;
       padding: 12px 12px;
-      background:
-        radial-gradient(circle at top, rgba(255,255,255,0.12) 0%, transparent 60%),
-        rgba(0,0,0,0.68);
-      border-radius: 14px;
+      background: rgba(0,0,0,0.34);
+      border-radius: 16px;
       border: 1px solid var(--card-border);
-      box-shadow: 0 12px 28px rgba(0,0,0,0.7);
     }
 
     .programa-nombre {
-      font-size: 0.94rem;
+      font-size: 0.95rem;
       font-weight: 700;
       letter-spacing: 0.04em;
     }
 
     .programa-desc {
-      font-size: 0.8rem;
+      font-size: 0.84rem;
       color: var(--text-muted);
     }
 
@@ -465,7 +356,7 @@
     }
 
     .pill-link {
-      font-size: 0.72rem;
+      font-size: 0.74rem;
       padding: 4px 10px;
       border-radius: 999px;
       background: #ffffff;
@@ -484,8 +375,6 @@
       margin-top: 8px;
     }
 
-    /* === BOTÓN FLOTANTE REPRODUCTOR === */
-
     .floating-player-btn {
       position: fixed;
       right: 16px;
@@ -493,14 +382,15 @@
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      padding: 10px 18px;
+      padding: 10px 16px;
       border-radius: 999px;
       background: #ffffff;
       color: var(--sonora-red-dark);
       font-size: 0.85rem;
       font-weight: 700;
-      box-shadow: 0 10px 24px rgba(0,0,0,0.45);
+      box-shadow: 0 10px 24px rgba(0,0,0,0.35);
       z-index: 999;
+      text-decoration: none;
     }
 
     .floating-dot {
@@ -513,40 +403,115 @@
 
     .floating-player-btn:hover {
       transform: translateY(-1px);
-      box-shadow: 0 16px 32px rgba(0,0,0,0.7);
+      box-shadow: 0 16px 30px rgba(0,0,0,0.45);
     }
 
-    /* === RESPONSIVE === */
+    /* ===== DESKTOP ===== */
 
-    @media (max-width: 840px) {
-      .hero {
-        grid-template-columns: 1fr;
-        gap: 16px;
-      }
-      .hero-right {
-        order: -1;
-      }
-    }
-
-    @media (max-width: 640px) {
+    @media (min-width: 720px) {
       .page {
-        padding: 16px 14px 100px;
+        padding: 18px 18px 110px;
       }
+
+      .hero {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: flex-end;
+        gap: 18px;
+        margin-bottom: 12px;
+      }
+
+      .hero-sub {
+        text-align: right;
+        margin-left: auto;
+      }
+
+      .live-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    /* ===== MOBILE FINO (iPhone, etc) ===== */
+
+    @media (max-width: 480px) {
+      .page {
+        padding: 14px 10px 88px;
+      }
+
       header {
         flex-direction: column;
         align-items: flex-start;
+        gap: 8px;
       }
-      .hero-title {
-        font-size: 2rem;
-      }
-      .programa-card {
-        flex: 0 0 220px;
-      }
-    }
 
-    @media (min-width: 860px) {
-      .live-grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
+      .brand-main {
+        font-size: 1.1rem;
+      }
+
+      .brand-sub {
+        font-size: 0.72rem;
+      }
+
+      .btn-ghost {
+        padding: 5px 12px;
+        font-size: 0.7rem;
+      }
+
+      .hero-title {
+        font-size: 1.6rem;
+      }
+
+      .hero-sub {
+        font-size: 0.82rem;
+      }
+
+      section {
+        padding: 12px 11px 14px;
+        border-radius: 16px;
+      }
+
+      .section-title {
+        font-size: 0.78rem;
+        letter-spacing: 0.16em;
+      }
+
+      .section-caption {
+        font-size: 0.72rem;
+      }
+
+      .live-highlight {
+        grid-template-columns: 1fr; /* una columna en móvil */
+        gap: 12px;
+      }
+
+      .live-now-title {
+        font-size: 0.96rem;
+      }
+
+      .live-next-title {
+        font-size: 0.84rem;
+      }
+
+      .live-slot {
+        font-size: 0.78rem;
+      }
+
+      .live-slot-time {
+        min-width: 78px;
+      }
+
+      .floating-player-btn {
+        left: 50%;
+        right: auto;
+        bottom: 10px;
+        transform: translateX(-50%);
+        width: calc(100% - 32px);
+        justify-content: center;
+        padding-inline: 12px;
+      }
+
+      .floating-player-btn:hover {
+        transform: translateX(-50%) translateY(-1px);
       }
     }
   </style>
@@ -564,67 +529,57 @@
       </a>
     </header>
 
-    <!-- HERO + BLOQUE DIRECTO TIPO OTT -->
     <div class="hero">
-      <div class="hero-left">
-        <div class="hero-tag">Todo lo que suena en</div>
+      <div>
         <h1 class="hero-title">
-          Sonora
+          Todo lo que suena en <span>Sonora</span>
         </h1>
-        <p class="hero-sub">
-          Martes y jueves en directo desde la UC3M. El resto del tiempo, tus programas en diferido para escuchar cuando quieras, como si fuera tu plataforma de series favorita.
-        </p>
-        <div class="hero-badge-row">
-          <span class="pill pill-strong">Radio en directo</span>
-          <span class="pill">Martes & Jueves</span>
-          <span class="pill">Podcasts oficiales</span>
-        </div>
       </div>
-
-      <!-- Este bloque se rellena con lo que haya "ahora" y "siguiente" -->
-      <div class="hero-right" id="hero-live-card">
-        <div class="hero-live-header">
-          <div class="hero-live-label">En directo</div>
-          <div class="hero-live-tag">Horario CET · Estudio UC3M</div>
-        </div>
-
-        <div class="hero-live-main" id="hero-live-main">
-          <div class="hero-live-empty">
-            No hay ningún programa en directo en este momento.
-          </div>
-        </div>
-
-        <div>
-          <div class="hero-live-next-label">Siguiente</div>
-          <div class="hero-live-next" id="hero-live-next">
-            No hay más programas programados para hoy.
-          </div>
-        </div>
-
-        <div class="hero-cta-row">
-          <a class="hero-cta" href="https://radio.radiobot.org/public/sonora" target="_blank" rel="noopener">
-            <span class="hero-cta-dot"></span>
-            <span>Escuchar ahora</span>
-          </a>
-          <div class="hero-progress-wrap">
-            <div class="hero-progress-bar-bg">
-              <div class="hero-progress-bar" id="hero-progress-bar"></div>
-            </div>
-          </div>
-        </div>
-      </div>
+      <p class="hero-sub">
+        Martes y jueves en directo desde la UC3M. El resto del tiempo, tus programas en diferido para escuchar cuando quieras.
+      </p>
     </div>
 
     <div class="sections">
-      <!-- DIRECTO – HORARIO MARTES / JUEVES -->
+      <!-- DIRECTO -->
       <section>
         <div class="section-header">
           <div class="section-title">Directo · Martes y jueves</div>
-          <div class="section-caption">Toda la parrilla de tarde, día a día</div>
+          <div class="section-caption">Horario CET · Estudio de radio UC3M</div>
         </div>
 
-        <div class="live-grid" id="live-grid">
-          <!-- JS rellena aquí -->
+        <div class="live-main">
+          <!-- Highlight AHORA / SIGUIENTE -->
+          <div class="live-badge-row">
+            <span class="pill pill-strong">En directo</span>
+            <span class="pill">Martes & Jueves</span>
+          </div>
+
+          <div class="live-highlight" id="live-highlight">
+            <div>
+              <div class="live-now-label">Ahora mismo</div>
+              <div id="live-now-main">
+                <div class="live-now-empty">
+                  No hay ningún programa en directo en este momento.
+                </div>
+              </div>
+              <div class="live-progress" id="live-progress" style="display:none;">
+                <div class="live-progress-bar" id="live-progress-bar"></div>
+              </div>
+            </div>
+
+            <div>
+              <div class="live-next-label">Siguiente</div>
+              <div id="live-next-main">
+                <div class="live-next-time">No hay más programas hoy.</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Listado por días -->
+          <div class="live-grid" id="live-grid">
+            <!-- JS rellena aquí -->
+          </div>
         </div>
       </section>
 
@@ -632,7 +587,7 @@
       <section>
         <div class="section-header">
           <div class="section-title">Programas en diferido</div>
-          <div class="section-caption">Escúchalos cuando quieras · Spotify, iVoox, YouTube…</div>
+          <div class="section-caption">Desde Spotify, iVoox, YouTube…</div>
         </div>
         <div id="programas-list" class="programas-list">
           <!-- JS rellena aquí -->
@@ -645,7 +600,7 @@
     </div>
   </div>
 
-  <!-- Botón flotante secundario para el reproductor -->
+  <!-- Botón fijo para abrir el reproductor de Azuracast -->
   <a class="floating-player-btn" href="https://radio.radiobot.org/public/sonora" target="_blank" rel="noopener">
     <span class="floating-dot"></span>
     <span>Escuchar en directo</span>
@@ -736,7 +691,7 @@
       return a;
     }
 
-    /* ==== DIRECTO: PARSEO HORARIO + HERO (AHORA / SIGUIENTE) ==== */
+    /* ==== DIRECTO: AHORA / SIGUIENTE + HORARIO ==== */
 
     function parseTimeRange(raw) {
       if (!raw) return null;
@@ -767,19 +722,21 @@
     }
 
     function renderLive(rows) {
-      const grid           = document.getElementById("live-grid");
-      const heroMain       = document.getElementById("hero-live-main");
-      const heroNext       = document.getElementById("hero-live-next");
-      const heroProgressEl = document.getElementById("hero-progress-bar");
+      const grid = document.getElementById("live-grid");
+      const nowMain = document.getElementById("live-now-main");
+      const nextMain = document.getElementById("live-next-main");
+      const progressWrap = document.getElementById("live-progress");
+      const progressBar = document.getElementById("live-progress-bar");
 
       grid.innerHTML = "";
-      heroMain.innerHTML = "";
-      heroNext.innerHTML = "";
+      nowMain.innerHTML = "";
+      nextMain.innerHTML = "";
+      progressWrap.style.display = "none";
 
       if (!rows.length) {
         grid.textContent = "No hay horarios configurados todavía.";
-        heroMain.innerHTML = "<div class='hero-live-empty'>No hay ningún programa en directo en este momento.</div>";
-        heroNext.textContent = "No hay programación cargada.";
+        nowMain.innerHTML = "<div class='live-now-empty'>No hay ningún programa en directo en este momento.</div>";
+        nextMain.innerHTML = "<div class='live-next-time'>No hay programación cargada.</div>";
         return;
       }
 
@@ -800,7 +757,9 @@
           horaTexto: horaRaw.trim(),
           programa: programa.trim(),
           startMinutes: t.startMinutes,
-          endMinutes: t.endMinutes
+          endMinutes: t.endMinutes,
+          startLabel: t.startLabel,
+          endLabel: t.endLabel
         };
 
         const key = dia.toLowerCase();
@@ -809,7 +768,7 @@
         scheduleObjects.push(slot);
       });
 
-      // Ordena cada día por hora
+      // Ordenamos cada día por hora
       Object.values(byDay).forEach(list => {
         list.sort((a, b) => a.startMinutes - b.startMinutes);
       });
@@ -857,9 +816,10 @@
         grid.appendChild(day);
       });
 
-      // ==== Cálculo AHORA / SIGUIENTE para el HERO ====
+      // ==== Cálculo AHORA / SIGUIENTE ====
       const now = new Date();
       const nowMinutes = now.getHours() * 60 + now.getMinutes();
+
       const weekday = now.getDay(); // 0=Domingo, 1=Lunes, 2=Martes...
       const todayName =
         weekday === 2 ? "martes" :
@@ -887,48 +847,63 @@
         }
       }
 
-      // "Ahora"
+      // Rellenar UI de "Ahora mismo"
       if (nowSlot) {
         const title = document.createElement("div");
-        title.className = "hero-live-title";
+        title.className = "live-now-title";
         title.textContent = nowSlot.programa;
 
         const time = document.createElement("div");
-        time.className = "hero-live-time";
-        time.innerHTML = `<span class="hero-live-time-dot"></span>${nowSlot.horaTexto} · ${nowSlot.dia.toUpperCase()}`;
+        time.className = "live-now-time";
+        time.textContent = `${nowSlot.horaTexto} · ${nowSlot.dia.toUpperCase()}`;
 
-        heroMain.appendChild(title);
-        heroMain.appendChild(time);
+        nowMain.appendChild(title);
+        nowMain.appendChild(time);
 
         // Progreso
         const total = nowSlot.endMinutes - nowSlot.startMinutes;
         const elapsed = nowMinutes - nowSlot.startMinutes;
         const pct = Math.min(100, Math.max(0, (elapsed / total) * 100));
-        heroProgressEl.style.width = pct + "%";
+        progressBar.style.width = pct + "%";
+        progressWrap.style.display = "block";
       } else {
         const empty = document.createElement("div");
-        empty.className = "hero-live-empty";
+        empty.className = "live-now-empty";
         empty.textContent = "No hay ningún programa en directo en este momento.";
-        heroMain.appendChild(empty);
-        heroProgressEl.style.width = "0%";
+        nowMain.appendChild(empty);
       }
 
       // "Siguiente"
       if (!nextSlot) {
-        if (todayName && todaysSlots.length) {
-          const first = todaysSlots[0];
-          heroNext.textContent =
-            `Próxima emisión: ${first.horaTexto} · ${first.dia.toUpperCase()} · ${first.programa}`;
-        } else if (!todayName && scheduleObjects.length) {
+        if (!todayName && scheduleObjects.length) {
           const future = scheduleObjects.slice().sort((a, b) => a.startMinutes - b.startMinutes)[0];
-          heroNext.textContent =
-            `${future.horaTexto} · ${future.dia.toUpperCase()} · ${future.programa}`;
+          const txt = document.createElement("div");
+          txt.className = "live-next-time";
+          txt.textContent = `${future.horaTexto} · ${future.dia.toUpperCase()} · ${future.programa}`;
+          nextMain.appendChild(txt);
+        } else if (todayName && todaysSlots.length) {
+          const first = todaysSlots[0];
+          const txt = document.createElement("div");
+          txt.className = "live-next-time";
+          txt.textContent = `Próxima emisión: ${first.horaTexto} · ${first.dia.toUpperCase()} · ${first.programa}`;
+          nextMain.appendChild(txt);
         } else {
-          heroNext.textContent = "No hay más programas programados.";
+          const txt = document.createElement("div");
+          txt.className = "live-next-time";
+          txt.textContent = "No hay más programas hoy.";
+          nextMain.appendChild(txt);
         }
       } else {
-        heroNext.textContent =
-          `${nextSlot.horaTexto} · ${nextSlot.dia.toUpperCase()} · ${nextSlot.programa}`;
+        const title = document.createElement("div");
+        title.className = "live-next-title";
+        title.textContent = nextSlot.programa;
+
+        const time = document.createElement("div");
+        time.className = "live-next-time";
+        time.textContent = `${nextSlot.horaTexto} · ${nextSlot.dia.toUpperCase()}`;
+
+        nextMain.appendChild(title);
+        nextMain.appendChild(time);
       }
     }
 
