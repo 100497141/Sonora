@@ -178,11 +178,13 @@
       overflow: hidden;
       min-height: 170px;
       background:
-        radial-gradient(circle at top left, rgba(255,255,255,0.18) 0%, transparent 55%),
-        linear-gradient(135deg, rgba(0,0,0,0.9), rgba(0,0,0,0.5));
-      border: 1px solid rgba(255,255,255,0.2);
+        radial-gradient(circle at top left, rgba(190,22,34,0.5) 0%, transparent 55%),
+        linear-gradient(135deg, rgba(0,0,0,0.95), rgba(0,0,0,0.6));
+      border: 1px solid rgba(190,22,34,0.9);
       padding: 14px 16px 14px;
-      box-shadow: 0 24px 60px rgba(0,0,0,0.8);
+      box-shadow:
+        0 0 24px rgba(190,22,34,0.35),
+        0 24px 60px rgba(0,0,0,0.9);
       display: flex;
       flex-direction: column;
       justify-content: space-between;
@@ -207,7 +209,7 @@
       font-size: 0.72rem;
       padding: 3px 10px;
       border-radius: 999px;
-      background: rgba(255,255,255,0.1);
+      background: rgba(0,0,0,0.5);
       border: 1px solid rgba(255,255,255,0.35);
       text-align: right;
       white-space: nowrap;
@@ -357,19 +359,6 @@
     .section-caption {
       font-size: 0.78rem;
       opacity: 0.8;
-    }
-
-    /* Sección de programación emisión ligeramente distinta */
-    .section-live {
-      background:
-        radial-gradient(circle at top left, rgba(190,22,34,0.35) 0%, transparent 55%),
-        linear-gradient(135deg, rgba(0,0,0,0.9), rgba(0,0,0,0.6));
-      border-color: rgba(190,22,34,0.9);
-      box-shadow: 0 18px 40px rgba(0,0,0,0.9);
-    }
-
-    .section-live .section-title {
-      color: #ffffff;
     }
 
     /* === DIRECTO: LISTA MARTES / JUEVES === */
@@ -550,7 +539,7 @@
         gap: 16px;
       }
       .hero-right {
-        order: -1; /* primero el EN DIRECTO en tablets */
+        order: -1; /* primero EN DIRECTO en tablets */
       }
     }
 
@@ -695,10 +684,10 @@
     </div>
 
     <div class="sections">
-      <!-- DIRECTO – HORARIO MARTES / JUEVES -->
-      <section class="section-live">
+      <!-- PROGRAMACIÓN MARTES / JUEVES -->
+      <section>
         <div class="section-header">
-          <div class="section-title">Programación emisión</div>
+          <div class="section-title">Programación</div>
           <div class="section-caption">Martes y jueves</div>
         </div>
 
@@ -856,6 +845,19 @@
         return;
       }
 
+      const dayMap = {
+        "domingo": 0,
+        "lunes": 1,
+        "martes": 2,
+        "miercoles": 3,
+        "miércoles": 3,
+        "jueves": 4,
+        "viernes": 5,
+        "sabado": 6,
+        "sábado": 6
+      };
+      const WEEK_MIN = 7 * 24 * 60;
+
       const byDay = {};
       const scheduleObjects = [];
 
@@ -863,21 +865,27 @@
         const [diaRaw, horaRaw, programa] = cols;
         if (!diaRaw || !horaRaw || !programa) return;
 
-        const dia = diaRaw.trim();
+        const diaFull = diaRaw.trim();
+        const dayBase = diaFull.toLowerCase().split(" ")[0]; // "martes", "martes 24" -> "martes"
+        const dayIndex = dayMap[dayBase];
+        if (dayIndex === undefined) return; // ignoramos filas raras
+
         const t = parseTimeRange(horaRaw.trim());
         if (!t) return;
 
         const slot = {
-          dia,
+          dia: diaFull,
+          dayBase,
+          dayIndex,
           horaTexto: horaRaw.trim(),
           programa: programa.trim(),
           startMinutes: t.startMinutes,
-          endMinutes: t.endMinutes
+          endMinutes: t.endMinutes,
+          weekStartMinutes: dayIndex * 24 * 60 + t.startMinutes
         };
 
-        const key = dia.toLowerCase();
-        if (!byDay[key]) byDay[key] = [];
-        byDay[key].push(slot);
+        if (!byDay[dayBase]) byDay[dayBase] = [];
+        byDay[dayBase].push(slot);
         scheduleObjects.push(slot);
       });
 
@@ -885,6 +893,7 @@
         list.sort((a, b) => a.startMinutes - b.startMinutes);
       });
 
+      // GRID SOLO MARTES / JUEVES
       ["martes", "jueves"].forEach(key => {
         const slots = byDay[key];
         if (!slots || !slots.length) return;
@@ -924,18 +933,15 @@
 
       const now = new Date();
       const nowMinutes = now.getHours() * 60 + now.getMinutes();
-      const weekday = now.getDay(); // 0=Dom,1=Lun,2=Mar,3=Mié,4=Jue,5=Vie,6=Sáb
+      const weekday = now.getDay(); // 0=Dom,1=Lun,2=Mar...
 
-      const todayName =
-        weekday === 2 ? "martes" :
-        weekday === 4 ? "jueves" : null;
+      const weekdayNames = [
+        "domingo", "lunes", "martes", "miercoles", "jueves", "viernes", "sabado"
+      ];
+      const todayBase = weekdayNames[weekday];
+      const nowWeekMinutes = weekday * 24 * 60 + nowMinutes;
 
-      let todaysSlots = [];
-      if (todayName) {
-        todaysSlots = scheduleObjects.filter(s =>
-          s.dia.trim().toLowerCase() === todayName
-        );
-      }
+      let todaysSlots = scheduleObjects.filter(s => s.dayBase === todayBase);
 
       let nowSlot = null;
       let nextSlot = null;
@@ -952,6 +958,7 @@
         }
       }
 
+      // Ahora mismo
       if (nowSlot) {
         const title = document.createElement("div");
         title.className = "hero-live-title";
@@ -978,16 +985,31 @@
         heroMain.appendChild(empty);
 
         heroProgressEl.style.width = "0%";
-        heroCtaRow.classList.add("hidden"); // no mostrar “Escuchar ahora” si no hay directo
+        heroCtaRow.classList.add("hidden"); // sin botón si no hay directo
       }
 
+      // Función para encontrar el siguiente en toda la semana
+      function findNextAcrossWeek(slots, nowWeekMin) {
+        if (!slots.length) return null;
+        let best = null;
+        let bestDelta = WEEK_MIN + 1;
+
+        for (const s of slots) {
+          const slotMin = s.weekStartMinutes;
+          let delta = slotMin - nowWeekMin;
+          if (delta <= 0) delta += WEEK_MIN;
+          if (delta < bestDelta) {
+            bestDelta = delta;
+            best = s;
+          }
+        }
+        return best;
+      }
+
+      // Siguiente
       if (!nextSlot) {
-        if (todayName && todaysSlots.length) {
-          const first = todaysSlots[0];
-          heroNext.textContent =
-            `Próxima emisión: ${first.horaTexto} · ${first.dia.toUpperCase()} · ${first.programa}`;
-        } else if (!todayName && scheduleObjects.length) {
-          const future = scheduleObjects.slice().sort((a, b) => a.startMinutes - b.startMinutes)[0];
+        const future = findNextAcrossWeek(scheduleObjects, nowWeekMinutes);
+        if (future) {
           heroNext.textContent =
             `${future.horaTexto} · ${future.dia.toUpperCase()} · ${future.programa}`;
         } else {
