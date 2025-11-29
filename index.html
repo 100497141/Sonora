@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Sonora UC3M · Programación y podcasts</title>
 
-  <!-- Intentará usar Helvetica Now Display si está instalada en el sistema -->
   <style>
     :root {
       --sonora-red: #be1622;
@@ -17,7 +16,7 @@
       --pill-bg: rgba(255,255,255,0.06);
       --text-main: #ffffff;
       --text-muted: #d4d4d4;
-      --text-soft: #a3a3a3;
+      --text-soft:  #a3a3a3;
     }
 
     * {
@@ -50,7 +49,7 @@
       width: 100%;
     }
 
-    /* === HEADER / NAVBAR === */
+    /* === HEADER === */
 
     header {
       display: flex;
@@ -108,7 +107,7 @@
       box-shadow: 0 0 0 4px rgba(0,255,123,0.28);
     }
 
-    /* === HERO / FEEL OTT === */
+    /* === HERO === */
 
     .hero {
       display: grid;
@@ -318,7 +317,7 @@
       transition: width 0.4s ease;
     }
 
-    /* === SECTIONS (OTT LOOK) === */
+    /* === SECCIONES === */
 
     .sections {
       display: flex;
@@ -355,7 +354,7 @@
       opacity: 0.8;
     }
 
-    /* === LISTADO DE DIRECTO (MARTES / JUEVES) === */
+    /* === DIRECTO (LISTA) === */
 
     .live-grid {
       display: grid;
@@ -408,7 +407,7 @@
       color: var(--text-muted);
     }
 
-    /* === PROGRAMAS EN DIFERIDO (ROW OTT) === */
+    /* === ON DEMAND (CARRUSEL) === */
 
     .programas-list {
       display: flex;
@@ -486,7 +485,7 @@
       margin-top: 8px;
     }
 
-    /* === BOTÓN FLOTANTE REPRODUCTOR === */
+    /* === BOTÓN FLOTANTE === */
 
     .floating-player-btn {
       position: fixed;
@@ -518,17 +517,17 @@
       box-shadow: 0 16px 32px rgba(0,0,0,0.7);
     }
 
-    /* === RESPONSIVE (TABLET) === */
+    /* === RESPONSIVE TABLET === */
 
     @media (max-width: 840px) {
       .hero {
         grid-template-columns: 1fr;
         gap: 18px;
       }
-      .hero-right {
-        order: -1;
-      }
+      /* En móvil el texto va primero y el bloque en directo debajo (orden natural) */
     }
+
+    /* === RESPONSIVE GENERAL MÓVIL === */
 
     @media (max-width: 640px) {
       .page {
@@ -554,13 +553,7 @@
       }
     }
 
-    @media (min-width: 860px) {
-      .live-grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-      }
-    }
-
-    /* === RESPONSIVE EXTRA PARA IPHONE / MÓVIL PEQUEÑO === */
+    /* === EXTRA MÓVIL PEQUEÑO (iPhone) === */
 
     @media (max-width: 480px) {
       .page {
@@ -666,6 +659,12 @@
         transform: translateX(-50%) translateY(-1px);
       }
     }
+
+    @media (min-width: 860px) {
+      .live-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
   </style>
 </head>
 <body>
@@ -681,7 +680,7 @@
       </a>
     </header>
 
-    <!-- HERO + BLOQUE DIRECTO TIPO OTT -->
+    <!-- HERO -->
     <div class="hero">
       <div class="hero-left">
         <div class="hero-tag">Todo lo que suena en</div>
@@ -693,16 +692,15 @@
         </p>
         <div class="hero-badge-row">
           <span class="pill pill-strong">Radio en directo</span>
-          <span class="pill">Martes & Jueves</span>
           <span class="pill">Programas originales</span>
         </div>
       </div>
 
-      <!-- Este bloque se rellena con lo que haya "ahora" y "siguiente" -->
+      <!-- BLOQUE EN DIRECTO -->
       <div class="hero-right" id="hero-live-card">
         <div class="hero-live-header">
           <div class="hero-live-label">En directo</div>
-          <div class="hero-live-tag">Horario CET · Estudio UC3M</div>
+          <div class="hero-live-tag">Estudio Sonora 15.0.27 (Campus de Getafe-UC3M)</div>
         </div>
 
         <div class="hero-live-main" id="hero-live-main">
@@ -733,11 +731,11 @@
     </div>
 
     <div class="sections">
-      <!-- DIRECTO – HORARIO MARTES / JUEVES -->
+      <!-- DIRECTO – PARRILLA -->
       <section>
         <div class="section-header">
-          <div class="section-title">Directo · Martes y jueves</div>
-          <div class="section-caption">Toda la parrilla de tarde, día a día</div>
+          <div class="section-title">Directo</div>
+          <div class="section-caption">Martes y jueves · horario de tarde</div>
         </div>
 
         <div class="live-grid" id="live-grid">
@@ -762,14 +760,13 @@
     </div>
   </div>
 
-  <!-- Botón flotante secundario para el reproductor -->
+  <!-- Botón flotante para el reproductor -->
   <a class="floating-player-btn" href="https://radio.radiobot.org/public/sonora" target="_blank" rel="noopener">
     <span class="floating-dot"></span>
     <span>Escuchar en directo</span>
   </a>
 
   <script>
-    // 🔗 ID de tu Google Sheet
     const SHEET_ID = "1g9f3Ue9GtdaTbpxp3DCXncrNPhjnHPk0m9QTXdfSAxM";
     const ODF_SHEET_NAME  = "OnDemand";
     const LIVE_SHEET_NAME = "Directo";
@@ -781,7 +778,7 @@
     async function fetchSheet(sheetName) {
       const res = await fetch(gvizUrl(sheetName));
       const text = await res.text();
-      const json = JSON.parse(text.substr(47).slice(0, -2)); // recorta wrapper gviz
+      const json = JSON.parse(text.substr(47).slice(0, -2));
       const rows = json.table.rows || [];
       return rows.map(r => (r.c || []).map(c => (c && c.v) ? String(c.v) : ""));
     }
@@ -812,7 +809,6 @@
         return;
       }
 
-      // Fila 0 = encabezados
       rows.slice(1).forEach(cols => {
         const [nombre, descripcion, spotify, ivoox, youtube] = cols;
         if (!nombre) return;
@@ -853,12 +849,10 @@
       return a;
     }
 
-    /* ==== DIRECTO: PARSEO HORARIO + HERO (AHORA / SIGUIENTE) ==== */
+    /* ==== DIRECTO / HERO ==== */
 
     function parseTimeRange(raw) {
       if (!raw) return null;
-
-      // Busca horas tipo 10:30 en el texto (soporta 10:30-10:45 o 10:30 – 10:45)
       const matches = raw.match(/(\d{1,2}):(\d{2})/g);
       if (!matches || matches.length === 0) return null;
 
@@ -869,7 +863,6 @@
       if (endStr) {
         [eh, em] = endStr.split(":").map(Number);
       } else {
-        // Si no hay fin, asumimos 60 minutos
         const total = sh * 60 + sm + 60;
         eh = Math.floor(total / 60);
         em = total % 60;
@@ -888,6 +881,8 @@
       const heroMain       = document.getElementById("hero-live-main");
       const heroNext       = document.getElementById("hero-live-next");
       const heroProgressEl = document.getElementById("hero-progress-bar");
+      const heroCta        = document.querySelector(".hero-cta");
+      const heroProgWrap   = document.querySelector(".hero-progress-wrap");
 
       grid.innerHTML = "";
       heroMain.innerHTML = "";
@@ -897,13 +892,14 @@
         grid.textContent = "No hay horarios configurados todavía.";
         heroMain.innerHTML = "<div class='hero-live-empty'>No hay ningún programa en directo en este momento.</div>";
         heroNext.textContent = "No hay programación cargada.";
+        if (heroCta) heroCta.style.display = "none";
+        if (heroProgWrap) heroProgWrap.style.display = "none";
         return;
       }
 
       const byDay = {};
       const scheduleObjects = [];
 
-      // DIA | HORA | PROGRAMA
       rows.slice(1).forEach(cols => {
         const [diaRaw, horaRaw, programa] = cols;
         if (!diaRaw || !horaRaw || !programa) return;
@@ -926,12 +922,10 @@
         scheduleObjects.push(slot);
       });
 
-      // Ordena cada día por hora
       Object.values(byDay).forEach(list => {
         list.sort((a, b) => a.startMinutes - b.startMinutes);
       });
 
-      // ==== Render listado MARTES / JUEVES ====
       ["martes", "jueves"].forEach(key => {
         const slots = byDay[key];
         if (!slots || !slots.length) return;
@@ -974,7 +968,6 @@
         grid.appendChild(day);
       });
 
-      // ==== Cálculo AHORA / SIGUIENTE para el HERO ====
       const now = new Date();
       const nowMinutes = now.getHours() * 60 + now.getMinutes();
       const weekday = now.getDay(); // 0=Domingo, 1=Lunes, 2=Martes...
@@ -1004,7 +997,7 @@
         }
       }
 
-      // "Ahora"
+      // AHORA
       if (nowSlot) {
         const title = document.createElement("div");
         title.className = "hero-live-title";
@@ -1017,20 +1010,25 @@
         heroMain.appendChild(title);
         heroMain.appendChild(time);
 
-        // Progreso
         const total = nowSlot.endMinutes - nowSlot.startMinutes;
         const elapsed = nowMinutes - nowSlot.startMinutes;
         const pct = Math.min(100, Math.max(0, (elapsed / total) * 100));
         heroProgressEl.style.width = pct + "%";
+
+        if (heroCta) heroCta.style.display = "inline-flex";
+        if (heroProgWrap) heroProgWrap.style.display = "flex";
       } else {
         const empty = document.createElement("div");
         empty.className = "hero-live-empty";
         empty.textContent = "No hay ningún programa en directo en este momento.";
         heroMain.appendChild(empty);
         heroProgressEl.style.width = "0%";
+
+        if (heroCta) heroCta.style.display = "none";
+        if (heroProgWrap) heroProgWrap.style.display = "none";
       }
 
-      // "Siguiente"
+      // SIGUIENTE
       if (!nextSlot) {
         if (todayName && todaysSlots.length) {
           const first = todaysSlots[0];
