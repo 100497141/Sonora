@@ -359,6 +359,19 @@
       opacity: 0.8;
     }
 
+    /* Sección de programación emisión ligeramente distinta */
+    .section-live {
+      background:
+        radial-gradient(circle at top left, rgba(190,22,34,0.35) 0%, transparent 55%),
+        linear-gradient(135deg, rgba(0,0,0,0.9), rgba(0,0,0,0.6));
+      border-color: rgba(190,22,34,0.9);
+      box-shadow: 0 18px 40px rgba(0,0,0,0.9);
+    }
+
+    .section-live .section-title {
+      color: #ffffff;
+    }
+
     /* === DIRECTO: LISTA MARTES / JUEVES === */
 
     .live-grid {
@@ -683,9 +696,9 @@
 
     <div class="sections">
       <!-- DIRECTO – HORARIO MARTES / JUEVES -->
-      <section>
+      <section class="section-live">
         <div class="section-header">
-          <div class="section-title">Directo</div>
+          <div class="section-title">Programación emisión</div>
           <div class="section-caption">Martes y jueves</div>
         </div>
 
