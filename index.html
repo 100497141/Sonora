@@ -43,6 +43,7 @@
     }
 
     .page {
+      width: 100%;
       max-width: 1200px;
       margin: 0 auto;
       padding: 20px 20px 120px;
@@ -105,7 +106,7 @@
       box-shadow: 0 0 0 4px rgba(0,255,123,0.28);
     }
 
-    /* === HERO / BLOQUE EN DIRECTO TIPO OTT === */
+    /* === HERO / BLOQUE EN DIRECTO === */
 
     .hero {
       display: grid;
@@ -265,6 +266,10 @@
       gap: 12px;
     }
 
+    .hero-cta-row.hidden {
+      display: none;
+    }
+
     .hero-cta {
       display: inline-flex;
       align-items: center;
@@ -291,10 +296,6 @@
     .hero-cta:hover {
       transform: translateY(-1px);
       box-shadow: 0 16px 34px rgba(0,0,0,0.8);
-    }
-
-    .hero-cta-row.hidden {
-      display: none;
     }
 
     .hero-progress-wrap {
@@ -406,7 +407,7 @@
       color: var(--text-muted);
     }
 
-    /* === PROGRAMAS EN DIFERIDO (CARRUSEL) === */
+    /* === PROGRAMAS EN DIFERIDO (CARRUSEL ESCRITORIO) === */
 
     .programas-list {
       display: flex;
@@ -536,13 +537,13 @@
         gap: 16px;
       }
       .hero-right {
-        order: -1;
+        order: -1; /* primero el EN DIRECTO en tablets */
       }
     }
 
     @media (max-width: 640px) {
       .page {
-        padding: 16px 14px 100px;
+        padding: 14px 12px 90px;
       }
 
       header {
@@ -551,7 +552,14 @@
         gap: 6px;
       }
 
-      /* Ocultar texto "Todo lo que suena en Sonora..." en móvil */
+      .brand-main {
+        font-size: 1.3rem;
+      }
+      .brand-sub {
+        font-size: 0.75rem;
+      }
+
+      /* Ocultar bloque de texto "Todo lo que suena en Sonora..." en móvil */
       .hero-left {
         display: none;
       }
@@ -561,12 +569,45 @@
         display: none;
       }
 
+      .hero {
+        grid-template-columns: 1fr;
+        gap: 12px;
+        margin-bottom: 14px;
+      }
+
       .hero-right {
         min-height: 0;
+        padding: 12px 12px 12px;
+        border-radius: 18px;
+      }
+
+      section {
+        padding: 12px 12px 14px;
+        border-radius: 18px;
+      }
+
+      .section-title {
+        font-size: 0.82rem;
+        letter-spacing: 0.16em;
+      }
+
+      .live-day {
+        padding: 8px 10px;
+      }
+
+      .live-slot-time {
+        min-width: 80px;
+      }
+
+      /* En móvil, programas en columna, no carrusel */
+      .programas-list {
+        flex-direction: column;
+        overflow-x: visible;
       }
 
       .programa-card {
-        flex: 0 0 220px;
+        flex: 1 1 auto;
+        width: 100%;
       }
     }
 
@@ -680,7 +721,6 @@
   </a>
 
   <script>
-    // 🔗 ID de tu Google Sheet
     const SHEET_ID = "1g9f3Ue9GtdaTbpxp3DCXncrNPhjnHPk0m9QTXdfSAxM";
     const ODF_SHEET_NAME  = "OnDemand";
     const LIVE_SHEET_NAME = "Directo";
@@ -692,7 +732,7 @@
     async function fetchSheet(sheetName) {
       const res = await fetch(gvizUrl(sheetName));
       const text = await res.text();
-      const json = JSON.parse(text.substr(47).slice(0, -2)); // recorta wrapper gviz
+      const json = JSON.parse(text.substr(47).slice(0, -2));
       const rows = json.table.rows || [];
       return rows.map(r => (r.c || []).map(c => (c && c.v) ? String(c.v) : ""));
     }
@@ -712,8 +752,6 @@
       }
     }
 
-    /* ==== PROGRAMAS EN DIFERIDO ==== */
-
     function renderOnDemand(rows) {
       const cont = document.getElementById("programas-list");
       cont.innerHTML = "";
@@ -723,7 +761,6 @@
         return;
       }
 
-      // Fila 0 = encabezados
       rows.slice(1).forEach(cols => {
         const [nombre, descripcion, spotify, ivoox, youtube] = cols;
         if (!nombre) return;
@@ -764,12 +801,8 @@
       return a;
     }
 
-    /* ==== DIRECTO: PARSEO HORARIO + HERO (AHORA / SIGUIENTE) ==== */
-
     function parseTimeRange(raw) {
       if (!raw) return null;
-
-      // Busca horas tipo 10:30 en el texto (soporta 10:30-10:45 o 10:30 – 10:45)
       const matches = raw.match(/(\d{1,2}):(\d{2})/g);
       if (!matches || matches.length === 0) return null;
 
@@ -780,7 +813,6 @@
       if (endStr) {
         [eh, em] = endStr.split(":").map(Number);
       } else {
-        // Si no hay fin, asumimos 60 minutos
         const total = sh * 60 + sm + 60;
         eh = Math.floor(total / 60);
         em = total % 60;
@@ -814,7 +846,6 @@
       const byDay = {};
       const scheduleObjects = [];
 
-      // Columnas esperadas: DIA | HORA | PROGRAMA
       rows.slice(1).forEach(cols => {
         const [diaRaw, horaRaw, programa] = cols;
         if (!diaRaw || !horaRaw || !programa) return;
@@ -837,12 +868,10 @@
         scheduleObjects.push(slot);
       });
 
-      // Ordena cada día por hora
       Object.values(byDay).forEach(list => {
         list.sort((a, b) => a.startMinutes - b.startMinutes);
       });
 
-      // ==== Render listado MARTES / JUEVES ====
       ["martes", "jueves"].forEach(key => {
         const slots = byDay[key];
         if (!slots || !slots.length) return;
@@ -880,10 +909,9 @@
         grid.appendChild(day);
       });
 
-      // ==== Cálculo AHORA / SIGUIENTE para el HERO ====
       const now = new Date();
       const nowMinutes = now.getHours() * 60 + now.getMinutes();
-      const weekday = now.getDay(); // 0=Dom,1=Lun,2=Mar,3=Mié,4=Jue...
+      const weekday = now.getDay(); // 0=Dom,1=Lun,2=Mar,3=Mié,4=Jue,5=Vie,6=Sáb
 
       const todayName =
         weekday === 2 ? "martes" :
@@ -911,7 +939,6 @@
         }
       }
 
-      // "Ahora"
       if (nowSlot) {
         const title = document.createElement("div");
         title.className = "hero-live-title";
@@ -938,10 +965,9 @@
         heroMain.appendChild(empty);
 
         heroProgressEl.style.width = "0%";
-        heroCtaRow.classList.add("hidden"); // no mostrar "Escuchar ahora" sin emisión
+        heroCtaRow.classList.add("hidden"); // no mostrar “Escuchar ahora” si no hay directo
       }
 
-      // "Siguiente"
       if (!nextSlot) {
         if (todayName && todaysSlots.length) {
           const first = todaysSlots[0];
